@@ -5,15 +5,15 @@ public class Cancion {
     private String nombre;
     private String artista;
     private String disco;
-    private int anio;
+    private short anio;
     // 1 hora en segundos?
-    private int duracionSegundos;
+    private short duracionSegundos;
     private String genero;
     private String artistaColaborador;
     
     // Constructor
-    public Cancion(String nombre, String artista, int anio, 
-            int duracionSegundos, String genero) {
+    public Cancion(String nombre, String artista, short anio, 
+            short duracionSegundos, String genero) {
         this.nombre = nombre;
         this.artista = artista;
         this.anio = anio;
@@ -21,7 +21,7 @@ public class Cancion {
         this.genero = genero;
     }
 
-    public Cancion(String nombre, String artista, String disco, int anio, int duracionSegundos, String genero, String artistaColaborador) {
+    public Cancion(String nombre, String artista, String disco, short anio, short duracionSegundos, String genero, String artistaColaborador) {
         this.nombre = nombre;
         this.artista = artista;
         this.disco = disco;
@@ -47,11 +47,11 @@ public class Cancion {
         return disco;
     }
 
-    public int getAnio() {
+    public short getAnio() {
         return anio;
     }
 
-    public int getDuracionSegundos() {
+    public short getDuracionSegundos() {
         return duracionSegundos;
     }
 
