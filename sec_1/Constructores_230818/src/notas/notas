@@ -1,0 +1,23 @@
+Clases
+    : Atributos     --> características
+    : Constructores --> Inicializar los atr
+    : Métodos       --> acciones o funcionalidades
+                    --> función --> trozo de código 
+                        con nombre
+
+
+Constructor: 
+    - NO ES UN MÉTODO NI FUNCIÓN
+    - ¿Cómo identificar un constructor?
+        - públicos siempre
+        - nombre es el mismo de la clase
+            Cliente --> Cliente
+        - No tiene tipo de retorno
+
+    - Definción: Un constructor inicializa los atributos
+del objeto (Da un valor inicial)--> analizar
+
+    - Fuera de la clase, cuando se instancia se ve 
+de esta forma
+
+        - Cliente c = new Cliente();

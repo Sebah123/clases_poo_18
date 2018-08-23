@@ -1,0 +1,17 @@
+Nombres de los componentes
+
+    --> JTextField  --> txt --> txtRut
+    --> JButton     --> btn --> btnRegistrar
+    --> JLabel      --> lbl --> lblMensaje
+    --> JCheckBox   --> chk --> chkLinux,                                       chkWindows
+    --> JRadioButton --> rd, op --> opSexo, rdSexo
+    --> JComboBox   --> cbo --> cboCiudad
+    --> JPanel      --> pnl --> pnlCalculadora
+    --> JTabbedPane --> tp --> tpMenu
+    --> JMenuBar    --> mb --> mbApp
+    --> JMenu       --> men --> menArchivo
+    --> JMenuItem   --> mi  --> miSalir
+
+layout
+
+ JOptionPane.showMessageDialog(this, "Holi");
