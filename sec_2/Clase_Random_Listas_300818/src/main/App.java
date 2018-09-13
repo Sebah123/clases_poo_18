@@ -161,6 +161,12 @@ public class App extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(tabAlumnos);
 
+        txtBuscar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtBuscarKeyReleased(evt);
+            }
+        });
+
         btnBuscar.setText("Buscar");
         btnBuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -311,6 +317,8 @@ public class App extends javax.swing.JFrame {
             listarAlumnosConsola();
             validarBotonAzar();
             
+            modelAlumno = new TMAlumno(listaAlumnos);
+            tabAlumnos.setModel(modelAlumno);
             tabAlumnos.updateUI();
         }
     }//GEN-LAST:event_btnRegistrarActionPerformed
@@ -356,24 +364,17 @@ public class App extends javax.swing.JFrame {
     }//GEN-LAST:event_miLimpiarActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-        List<Alumno> listaAux = new ArrayList<>();
-        
-        String texto = txtBuscar.getText();
-        
-        for (Alumno alum : listaAlumnos) {
-            if(alum.getNombre().toLowerCase().contains(texto.toLowerCase())){
-                listaAux.add(alum);
-            }
-        }
-        
-        modelAlumno = new TMAlumno(listaAux);
-        tabAlumnos.setModel(modelAlumno);
+        buscar();
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void btnCargarTodosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCargarTodosActionPerformed
         modelAlumno = new TMAlumno(listaAlumnos);
         tabAlumnos.setModel(modelAlumno);
     }//GEN-LAST:event_btnCargarTodosActionPerformed
+
+    private void txtBuscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarKeyReleased
+        buscar();
+    }//GEN-LAST:event_txtBuscarKeyReleased
 
     public static void main(String args[]) {
 
@@ -469,5 +470,38 @@ public class App extends javax.swing.JFrame {
 
         Alumno alum = listaAlumnos.get(numRandom);
         lblDatos.setText(alum.getNombre() + " - " + alum.getEdad() + " años");
+    }
+
+    private void buscar() {
+        List<Alumno> listaAux = new ArrayList<>();
+        
+        String texto = txtBuscar.getText();
+        
+        texto = texto.toLowerCase();
+        
+        texto = texto.replaceAll("á", "a");
+        texto = texto.replaceAll("é", "e");
+        texto = texto.replaceAll("í", "i");
+        texto = texto.replaceAll("ó", "o");
+        texto = texto.replaceAll("ú", "u");
+        
+        for (Alumno alum : listaAlumnos) {
+            String nomAlum = alum.getNombre();
+            
+            nomAlum = nomAlum.toLowerCase();
+        
+            nomAlum = nomAlum.replaceAll("á", "a");
+            nomAlum = nomAlum.replaceAll("é", "e");
+            nomAlum = nomAlum.replaceAll("í", "i");
+            nomAlum = nomAlum.replaceAll("ó", "o");
+            nomAlum = nomAlum.replaceAll("ú", "u");
+            
+            if(nomAlum.contains(texto)){
+                listaAux.add(alum);
+            }
+        }
+        
+        modelAlumno = new TMAlumno(listaAux);
+        tabAlumnos.setModel(modelAlumno);
     }
 }
