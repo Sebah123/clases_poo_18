@@ -1,0 +1,57 @@
+JTable --> 
+    3 formas distintas de colocar datos en una tabla
+
+JTable --> tabAlumnos
+
+OBJ --> private List<Alumno> listaAlumnos --> tabAlumnos
+
+3 maneras:
+    - DefaultTableModel (ya esta desarrollada)
+        - Matrices y Vectores
+
+    - TableModel (interface)
+        - Un archivo
+        - != clase (tm = new TableModel())
+        - métodos (sin cuerpo) --> definición de métodos --> (qué debo hacer, pero no como hacerlo)
+        - 9 métodos que debo implementar
+
+        public class TMAlumno implments TableModel
+
+    - AbstractTableModel
+        - Una clase abstracta
+        - que implementa ciertos métodos de TableModel (6 métodos listos) --> yo como desarrador debo implementar los 3 restantes (3+1 (títulos de las columnas))
+
+        
+        public class TMAlumno extends AbstractTableModel
+            private List<Alumno> lista;
+
+            public TMAlumno(List<Alumno> lista){
+                this.lista = lista;
+            }
+
+
+
+
+
+
+
+JTable --> tabAlumnos
+
+tabAlumnos.setModel(model);
+
+
+
+
+
+
+Declarar en la parte superior un objeto del tipo 
+TMAlgo
+
+
+
+
+
+
+
+        
+    
