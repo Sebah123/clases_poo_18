@@ -5,22 +5,29 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import javax.swing.JOptionPane;
+import model.Alumno;
+import model.TMAlumno;
 
 public class App extends javax.swing.JFrame {
 
     private Random ran;
-    private List<String> listaNombres;
+    private List<Alumno> listaAlumnos;
     private final String VERSION = "v0.2";
+    private int contIds; // para generar los ids
+    private TMAlumno modelAlumno;
 
     public App() {
         initComponents();
         ran = new Random();
-        listaNombres = new ArrayList<>();
+        listaAlumnos = new ArrayList<>();
         setTitle("Alumnos Random " + VERSION);
 
         setCentered(true);
         setResizable(false);
+        contIds = 0;
         
+        modelAlumno = new TMAlumno(listaAlumnos);
+        tblNombres.setModel(modelAlumno);
     }
 
     @SuppressWarnings("unchecked")
@@ -233,16 +240,14 @@ public class App extends javax.swing.JFrame {
     }//GEN-LAST:event_txtNombreKeyReleased
 
     private void btnAzarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAzarActionPerformed
-
-        int size = listaNombres.size();
+        int size = listaAlumnos.size();
         if (size > 0) {
             int numRandom = ran.nextInt(size);
             System.out.println("RANDOM --> " + numRandom);
 
-            String nombre = listaNombres.get(numRandom);
-            lblNombre.setText(nombre);
+            Alumno a = listaAlumnos.get(numRandom);
+            lblNombre.setText(a.getId()+" - "+a.getNombre());
         }
-
     }//GEN-LAST:event_btnAzarActionPerformed
 
     private void btnInfoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInfoActionPerformed
@@ -341,22 +346,31 @@ public class App extends javax.swing.JFrame {
     private void registrar() {
         String nombre = txtNombre.getText();
         if (!nombre.trim().isEmpty()) {
-            listaNombres.add(nombre);
+            Alumno a = new Alumno();
+            
+            // cont++ , ++cont
+//            contIds++;
+            a.setNombre(nombre);
+            a.setId(++contIds);
+            
+            listaAlumnos.add(a);
 
-            lblCantidad.setText("Cantidad de nombres: " + listaNombres.size());
+            lblCantidad.setText("Cantidad de nombres: " + listaAlumnos.size());
 
             txtNombre.setText(null);
             txtNombre.requestFocus();
+            // Actualiza la interfaz gráfica de la tabla
+            tblNombres.updateUI();
             
-            int cont = 1;
-            System.out.println("------------------");
-            System.out.println("Listado de alumnos");
-            System.out.println("------------------");
-            for (String nom : listaNombres) {
-                System.out.println(cont+") "+nom);
-                cont++;
-            }
-            System.out.println("------------------");
+//            int cont = 1;
+//            System.out.println("------------------");
+//            System.out.println("Listado de alumnos");
+//            System.out.println("------------------");
+//            for (String nom : listaNombres) {
+//                System.out.println(cont+") "+nom);
+//                cont++;
+//            }
+//            System.out.println("------------------");
         }
     }
 
