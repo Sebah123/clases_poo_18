@@ -1,0 +1,29 @@
+Estructura de datos
+    Sirve para almacenar datos
+        - Lista --> Estructura de datos
+                    Dinámica
+        - Estáticas: 
+            - El programador le da 
+            la cantidad de elementos que va a poseer
+
+            - El usuario diga cuantos elementos va a tener.
+                -> Arreglos (Vectores)
+                    - Arreglo unidimensional
+                -> Matrices (Matriz)
+                    - Arreglo bidemensional
+
+        - Listas --> List 
+        - Arreglos --> Vector
+        - Matrices --> x
+
+Estructura de datos: Es un conjunto de elementos "del mismo tipo" y que tienen un mismo nombre
+
+ejemplo de arreglos:
+    
+    // un arreglo de 5 edades
+    // un arreglo de 3 nombres
+
+    int[] edades = new int[5]; 
+    String[] nombres = new String[3];
+
+
