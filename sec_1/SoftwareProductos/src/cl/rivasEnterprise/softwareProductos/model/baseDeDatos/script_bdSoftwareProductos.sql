@@ -62,13 +62,7 @@ Posibles resultados:
 in  --> run, pass --> String run, String pass
 out --> nombre    --> String nombre
 */
-SELECT 
-    nombre
-FROM 
-    usuario
-WHERE 
-    run = '11-1' AND
-    pass = '123123';
+SELECT nombre FROM usuario WHERE run = '11-1' AND pass = '111';
 
 /*2.- El usuario va a poder crear un producto*/
 /*
@@ -121,8 +115,8 @@ SELECT
 FROM 
     producto
 WHERE 
-    nombre LIKE '%1%' OR
-    marca LIKE '%1%';
+    nombre LIKE '%asd%' OR
+    marca LIKE '%asd%';
 
 
 /*6.- El usuario va a poder actualizar un 
@@ -140,5 +134,13 @@ WHERE
     id = '1';
 
 
+/*7.- Mostrar la cantidad de productos*/
+/*7.1 Muestre la suma de stocks*/
+/*Cantidad de productos: 100*/
+SELECT SUM(stock) FROM producto;
+
+/*8.- Listado de productos en oferta (precio menores a 3000)*/
+/*8.1 El nombre y el precio*/
+SELECT nombre, precio FROM producto WHERE precio < 3000;
 
 /*Análisis de las consultas del proyecto*/
