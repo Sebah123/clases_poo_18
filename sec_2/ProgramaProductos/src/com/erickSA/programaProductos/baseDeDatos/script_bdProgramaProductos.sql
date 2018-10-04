@@ -40,13 +40,7 @@ SELECT * FROM producto;
 in  --> rut, password --> String rut, String password
 out --> String nombre
 */
-SELECT 
-    nombre
-FROM 
-    usuario 
-WHERE 
-    run = '11-1' AND 
-    password = '111';
+SELECT nombre FROM usuario WHERE run = '11-1' AND password = '111';
 
 
 
@@ -87,13 +81,7 @@ SELECT * FROM producto;
 in  --> texto --> String texto
 out --> Listado de productos --> List<Producto>
 */
-SELECT 
-    *
-FROM 
-    producto
-WHERE
-    nombre LIKE '%asd%' OR
-    marca LIKE '%asd%';
+SELECT * FROM producto WHERE nombre LIKE '%ko%' OR marca LIKE '%ko%';
 
 
 
