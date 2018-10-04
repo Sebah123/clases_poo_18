@@ -13,6 +13,8 @@ CREATE TABLE usuario(
 INSERT INTO usuario VALUES(NULL, '11-1','nombre 1','111');
 INSERT INTO usuario VALUES(NULL, '22-2','nombre 2','222');
 INSERT INTO usuario VALUES(NULL, '33-3','nombre 3','333');
+INSERT INTO usuario VALUES(NULL, '44-4','Tijeras','444');
+
 
 CREATE TABLE producto(
     id INT AUTO_INCREMENT,
