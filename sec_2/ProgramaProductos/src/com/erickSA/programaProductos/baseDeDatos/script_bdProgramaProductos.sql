@@ -13,6 +13,8 @@ CREATE TABLE usuario(
 INSERT INTO usuario VALUES(NULL, '11-1','nom1','111');
 INSERT INTO usuario VALUES(NULL, '22-2','nom2','222');
 INSERT INTO usuario VALUES(NULL, '33-3','nom3','333');
+INSERT INTO usuario VALUES(NULL, '44-4','Claudio Castro','castro');
+INSERT INTO usuario VALUES(NULL, '55-5','Juan Pablo Queraltó','banana');
 
 CREATE TABLE producto(
     id INT AUTO_INCREMENT,
@@ -119,4 +121,21 @@ SET
     stock = ''
 WHERE 
     id = '';
+
+
+
+
+
+/*7.- Mostrar el promedio de precios de todos los productos*/
+
+/*
+in  --> () --> nada
+out --> float --> número del promedio
+*/
+
+SELECT AVG(precio) FROM producto;
+
+
+/*8.- Listado de productos en oferta (Nombre y precio) < 500*/
+SELECT nombre, precio FROM producto WHERE precio < 500;
 

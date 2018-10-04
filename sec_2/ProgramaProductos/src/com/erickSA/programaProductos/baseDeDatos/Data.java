@@ -12,6 +12,43 @@ public class Data {
         con = new Conexion("bdProgramaProductos");
     }
     
+    public List<Producto> getProductosOferta(int precioCorte) throws SQLException{
+        List<Producto> lista = new ArrayList<>();
+
+        String select = "SELECT nombre, precio FROM producto WHERE precio < "+precioCorte;
+        
+        ResultSet rs = con.ejecutar(select);
+
+        while(rs.next()){
+            Producto p = new Producto();
+            
+            p.setNombre(rs.getString(1));
+            p.setPrecio(rs.getInt(2));
+            
+            lista.add(p);
+        }
+        
+        con.close();
+
+        return lista;
+    }
+    
+    public float getPromedioPrecios() throws SQLException{
+        float promedio = 0;
+        
+        String query = "SELECT AVG(precio) FROM producto;";
+        
+        ResultSet rs = con.ejecutar(query);
+        
+        if(rs.next()){
+            promedio = rs.getFloat(1);
+        }
+        
+        con.close();
+        
+        return promedio;
+    }
+    
     // iniciar Sesión
     public String getNombre(String run, String password) throws SQLException{
         String nombre = null; // null
@@ -87,10 +124,8 @@ public class Data {
             lista.add(p);
         }
         
-        // Bota la caja vacía de pasteles
         con.close();
 
-        // Retorna El estante con las cajas con pasteles
         return lista;
     }
     
@@ -110,4 +145,19 @@ public class Data {
                         "    id = '"+p.getId()+"';";
         con.ejecutar(update);
     }
+    
+//    public static void main(String[] args) {
+//        try {
+//            Data d = new Data();
+//            
+//            for (Producto pro : d.getProductosOferta(15000)) {
+//                System.out.println(pro.getNombre()+" - "+pro.getPrecio());
+//            }
+//            
+//        } catch (ClassNotFoundException ex) {
+//        } catch (SQLException ex) {
+//        }
+//        
+//        
+//    }
 }
