@@ -139,3 +139,11 @@ SELECT AVG(precio) FROM producto;
 /*8.- Listado de productos en oferta (Nombre y precio) < 500*/
 SELECT nombre, precio FROM producto WHERE precio < 500;
 
+
+/*
+obtener los datos de un producto a partir de su id
+
+in:  id
+out: Todos los datos del producto --> Producto
+*/
+SELECT * FROM producto WHERE id = '2';

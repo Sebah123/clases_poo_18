@@ -70,6 +70,26 @@ public class Data {
         con.ejecutar(insert);
     }
     
+    public Producto getProductoByID(String id) throws SQLException{
+        Producto p = new Producto();
+        
+        String query = "SELECT * FROM producto WHERE id = '"+id+"';";
+        
+        ResultSet rs = con.ejecutar(query);
+        
+        if(rs.next()){
+            p.setId(rs.getInt(1));
+            p.setNombre(rs.getString(2));
+            p.setMarca(rs.getString("marca"));
+            p.setPrecio(rs.getInt(4));
+            p.setStock(rs.getInt("stock"));
+        }
+        
+        con.close();
+        
+        return p;
+    }
+    
     
     public List<Producto> getProductos() throws SQLException {
         // Estante de cajas de pasteles
@@ -108,7 +128,9 @@ public class Data {
     public List<Producto> getProductos(String texto) throws SQLException{
         List<Producto> lista = new ArrayList<>();
 
-        String select = "SELECT * FROM producto WHERE nombre LIKE '%"+texto+"%' OR marca LIKE '%"+texto+"%';";
+        String select = "SELECT * FROM producto "
+                + "WHERE nombre LIKE '%"+texto+"%' "
+                + "OR marca LIKE '%"+texto+"%' OR id = '"+texto+"';";
         
         ResultSet rs = con.ejecutar(select);
 
