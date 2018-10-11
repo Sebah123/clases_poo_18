@@ -21,6 +21,7 @@ public class Data {
      * @return Lista de productos (Sólo el nombre y el precio)
      * @throws SQLException 
      */
+    
     public List<Producto> getProductosOfertas(int precioTope) throws SQLException{
         List<Producto> lista = new ArrayList<>();
         
@@ -155,7 +156,7 @@ public class Data {
         List<Producto> lista = new ArrayList<>();
         
         String query = "SELECT * FROM producto WHERE nombre LIKE '%"+filtro+"%' "
-                + "OR marca LIKE '%"+filtro+"%'";
+                + "OR marca LIKE '%"+filtro+"%' OR id = '"+filtro+"'";
         
         ResultSet rs = con.ejecutar(query);
         
@@ -189,5 +190,26 @@ public class Data {
                 + "WHERE id = '"+p.getId()+"'";
         
         con.ejecutar(update);
+    }
+    
+    // buscar
+    public Producto getProductoByID(String id) throws SQLException{
+        Producto pro = null;
+        
+        ResultSet rs = con.ejecutar("SELECT * FROM producto WHERE id = "+id);
+        
+        if(rs.next()){
+            pro = new Producto();
+            
+            pro.setId(rs.getInt(1));
+            pro.setNombre(rs.getString(2));
+            pro.setMarca(rs.getString(3));
+            pro.setStock(rs.getInt(4));
+            pro.setPrecio(rs.getInt(5));
+        }
+        
+        con.close();
+        
+        return pro;
     }
 }

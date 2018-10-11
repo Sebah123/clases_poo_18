@@ -2,10 +2,15 @@ package cl.rivasEnterprise.softwareProductos.gui;
 
 import cl.rivasEnterprise.softwareProductos.model.Producto;
 import cl.rivasEnterprise.softwareProductos.model.baseDeDatos.Data;
+import cl.rivasEnterprise.softwareProductos.model.tableModel.TMProducto;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.List;
 import javax.swing.JOptionPane;
+
+// base --> CRUD
+// CREATE, LISTAR, BUSCAR
+// Label --> promedio de precios --> AVG()
+// Tabla --> top 5 de productos con menos stock
 
 public class App extends javax.swing.JFrame {
     private Data d;
@@ -21,7 +26,7 @@ public class App extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, ex.getMessage());
         }
         
-        setLocationRelativeTo(null);
+        setLocationRelativeTo(null); // centra el formulario
         setTitle("Software Productos");
     }
 
@@ -47,6 +52,8 @@ public class App extends javax.swing.JFrame {
         btnRegistrar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
         lblNombre = new javax.swing.JLabel();
+        btnEliminar = new javax.swing.JButton();
+        btnModificar = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -154,7 +161,18 @@ public class App extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tabProductos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                tabProductosMouseReleased(evt);
+            }
+        });
         jScrollPane1.setViewportView(tabProductos);
+
+        txtBuscar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtBuscarKeyReleased(evt);
+            }
+        });
 
         btnRegistrar.setText("Registrar");
         btnRegistrar.addActionListener(new java.awt.event.ActionListener() {
@@ -164,11 +182,30 @@ public class App extends javax.swing.JFrame {
         });
 
         btnCancelar.setText("Cancelar");
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarActionPerformed(evt);
+            }
+        });
 
         lblNombre.setFont(new java.awt.Font("Tahoma", 3, 24)); // NOI18N
         lblNombre.setForeground(new java.awt.Color(0, 153, 51));
         lblNombre.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblNombre.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        btnEliminar.setText("Eliminar");
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarActionPerformed(evt);
+            }
+        });
+
+        btnModificar.setText("Modificar");
+        btnModificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnModificarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout formProductosLayout = new javax.swing.GroupLayout(formProductos.getContentPane());
         formProductos.getContentPane().setLayout(formProductosLayout);
@@ -179,15 +216,19 @@ public class App extends javax.swing.JFrame {
                 .addGroup(formProductosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblNombre, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(formProductosLayout.createSequentialGroup()
-                        .addGroup(formProductosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addGroup(formProductosLayout.createSequentialGroup()
+                        .addGroup(formProductosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, formProductosLayout.createSequentialGroup()
                                 .addComponent(btnCancelar)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(btnRegistrar))
-                            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, formProductosLayout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(btnEliminar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnModificar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(formProductosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 330, Short.MAX_VALUE)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 310, Short.MAX_VALUE)
                             .addComponent(txtBuscar))))
                 .addContainerGap())
         );
@@ -203,11 +244,15 @@ public class App extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(formProductosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnRegistrar)
-                            .addComponent(btnCancelar)))
+                            .addComponent(btnCancelar))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnEliminar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnModificar))
                     .addGroup(formProductosLayout.createSequentialGroup()
                         .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 260, Short.MAX_VALUE)))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 303, Short.MAX_VALUE)))
                 .addContainerGap())
         );
 
@@ -307,9 +352,15 @@ public class App extends javax.swing.JFrame {
                 txtNombre.requestFocus();
                 lblNombre.setText(nombre);
                 this.setVisible(false);
+                
+                btnEliminar.setEnabled(false);
+                btnModificar.setEnabled(false);
+                
                 formProductos.setBounds(0, 0, 650, 330);
                 formProductos.setLocationRelativeTo(null);
                 formProductos.setVisible(true);
+                
+                cargarTablaProductos();
             }
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(this, ex.getMessage());
@@ -361,6 +412,8 @@ public class App extends javax.swing.JFrame {
             txtNombre.requestFocus();
             /*Limpiando el formulario*/
             
+            cargarTablaProductos();
+            
             JOptionPane.showMessageDialog(this, "Producto Creado");
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(this, ex.getMessage());
@@ -368,18 +421,97 @@ public class App extends javax.swing.JFrame {
         
     }//GEN-LAST:event_btnRegistrarActionPerformed
 
+    private void txtBuscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarKeyReleased
+        String filtro = txtBuscar.getText();
+        
+        try {
+            List<Producto> lista = d.getProductos(filtro);
+            TMProducto model = new TMProducto(lista);
+            tabProductos.setModel(model);
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage());
+        }
+    }//GEN-LAST:event_txtBuscarKeyReleased
+
+    private void tabProductosMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabProductosMouseReleased
+        if(evt.getClickCount() == 2){
+            btnEliminar.setEnabled(true);
+            btnModificar.setEnabled(true);
+            btnRegistrar.setEnabled(false);
+            
+            int fila = tabProductos.getSelectedRow();
+            int columna = 0;
+            
+            String id = tabProductos.getValueAt(fila, columna).toString();
+            System.out.println("ID: "+id);
+            
+            try {
+                Producto pro = d.getProductoByID(id);
+                
+                txtId.setText(id);
+                txtNombre.setText(pro.getNombre());
+                txtMarca.setText(pro.getMarca());
+                txtStock.setText(String.valueOf(pro.getStock()));
+                txtPrecio.setText(String.valueOf(pro.getPrecio()));
+                
+                txtNombre.setEditable(false);
+                txtMarca.setEditable(false);
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(this, ex.getMessage());
+            }
+        }
+    }//GEN-LAST:event_tabProductosMouseReleased
+
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        limpiarFormulario();
+    }//GEN-LAST:event_btnCancelarActionPerformed
+
+    private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
+        Producto pro = new Producto();
+        
+        pro.setId(Integer.parseInt(txtId.getText()));
+        pro.setPrecio(Integer.parseInt(txtPrecio.getText()));
+        pro.setStock(Integer.parseInt(txtStock.getText()));
+        
+        try {
+            d.setProducto(pro);
+            
+            limpiarFormulario();
+            
+            cargarTablaProductos();
+            
+            JOptionPane.showMessageDialog(this, "Datos modificados");
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage());
+        }
+    }//GEN-LAST:event_btnModificarActionPerformed
+
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        // el botón eliminar se presiona si el usuario hizo doble click en la tabla
+        int id = Integer.parseInt(txtId.getText());
+        
+        try {
+            d.eliminarProducto(id);
+            limpiarFormulario();
+            cargarTablaProductos();
+            JOptionPane.showMessageDialog(this, "Producto eliminado");
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage());
+        }
+    }//GEN-LAST:event_btnEliminarActionPerformed
+
     public static void main(String args[]) {
        
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new App().setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            new App().setVisible(true);
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancelar;
+    private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnIniciarSesion;
+    private javax.swing.JButton btnModificar;
     private javax.swing.JButton btnRegistrar;
     private javax.swing.JFrame formProductos;
     private javax.swing.JLabel jLabel1;
@@ -404,4 +536,33 @@ public class App extends javax.swing.JFrame {
     private javax.swing.JTextField txtRun;
     private javax.swing.JTextField txtStock;
     // End of variables declaration//GEN-END:variables
+
+    private void cargarTablaProductos() {
+        try {
+            List<Producto> lista = d.getProductos();
+            TMProducto model = new TMProducto(lista);
+            tabProductos.setModel(model);
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage());
+        }
+    }
+
+    private void limpiarFormulario() {
+        btnEliminar.setEnabled(false);
+        btnModificar.setEnabled(false);
+        btnRegistrar.setEnabled(true);
+        
+        /*Limpiando el formulario*/
+        txtNombre.setText(null);
+        txtPrecio.setText(null);
+        txtMarca.setText(null);
+        txtStock.setText(null);
+        txtId.setText(null);
+
+        txtNombre.requestFocus();
+        /*Limpiando el formulario*/
+
+        txtNombre.setEditable(true);
+        txtMarca.setEditable(true);
+    }
 }
