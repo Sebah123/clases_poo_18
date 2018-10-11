@@ -22,14 +22,15 @@ CREATE TABLE producto(
     marca VARCHAR(100),
     stock INT,
     precio INT,
+    eliminado BOOLEAN,
     PRIMARY KEY(id)
 ); 
 
-INSERT INTO producto VALUES(NULL, 'Producto 1','Marca 1','100','1000');
-INSERT INTO producto VALUES(NULL, 'Producto 2','Marca 2','200','2000');
-INSERT INTO producto VALUES(NULL, 'Producto 3','Marca 3','300','3000');
-INSERT INTO producto VALUES(NULL, 'Producto 4','Marca 4','400','4000');
-INSERT INTO producto VALUES(NULL, 'Producto 5','Marca 4','500','5000');
+INSERT INTO producto VALUES(NULL, 'Producto 1','Marca 1','100','1000', false);
+INSERT INTO producto VALUES(NULL, 'Producto 2','Marca 2','200','2000', false);
+INSERT INTO producto VALUES(NULL, 'Producto 3','Marca 3','300','3000', false);
+INSERT INTO producto VALUES(NULL, 'Producto 4','Marca 4','400','4000', false);
+INSERT INTO producto VALUES(NULL, 'Producto 5','Marca 4','500','5000', false);
 
 /* -------- SELECTS ---------*/
 SELECT * FROM usuario;
@@ -146,3 +147,7 @@ SELECT SUM(stock) FROM producto;
 SELECT nombre, precio FROM producto WHERE precio < 3000;
 
 /*Análisis de las consultas del proyecto*/
+
+
+
+

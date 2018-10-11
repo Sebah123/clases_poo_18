@@ -25,7 +25,7 @@ public class Data {
     public List<Producto> getProductosOfertas(int precioTope) throws SQLException{
         List<Producto> lista = new ArrayList<>();
         
-        String query = "SELECT nombre, precio FROM producto WHERE precio < "+precioTope;
+        String query = "SELECT nombre, precio FROM producto WHERE precio < "+precioTope+" AND eliminado = false";
         
         ResultSet rs = con.ejecutar(query);
         
@@ -47,7 +47,7 @@ public class Data {
     public int getSumaStock() throws SQLException{
         int suma = 0;
         
-        String query = "SELECT SUM(stock) FROM producto;";
+        String query = "SELECT SUM(stock) FROM producto WHERE eliminado = false;";
         ResultSet rs = con.ejecutar(query);
         
         if(rs.next()){
@@ -91,7 +91,7 @@ public class Data {
                 + "VALUES(NULL, '"+p.getNombre()+"',"
                 + "'"+p.getMarca()+"',"
                 + "'"+p.getStock()+"',"
-                + "'"+p.getPrecio()+"')";
+                + "'"+p.getPrecio()+"', false)";
         
         con.ejecutar(insert);
     }
@@ -102,8 +102,8 @@ public class Data {
     out --> vacío --> void
     */
     public void eliminarProducto(int id) throws SQLException{
-        String delete = "DELETE FROM producto WHERE id = "+id;
-        con.ejecutar(delete);
+        String update = "UPDATE producto SET eliminado = true WHERE id = "+id;
+        con.ejecutar(update);
     }
     
     /*4.- El usuario va a poder ver una lista con los productos*/
@@ -117,7 +117,7 @@ public class Data {
         List<Producto> lista = new ArrayList<>();
         
         // Declarando la consulta
-        String query = "SELECT * FROM producto";
+        String query = "SELECT * FROM producto WHERE eliminado = false";
         
         // Ejecutando el select y dejo los datos en un ResultSet
         ResultSet rs = con.ejecutar(query);
@@ -155,8 +155,8 @@ public class Data {
     public List<Producto> getProductos(String filtro) throws SQLException{
         List<Producto> lista = new ArrayList<>();
         
-        String query = "SELECT * FROM producto WHERE nombre LIKE '%"+filtro+"%' "
-                + "OR marca LIKE '%"+filtro+"%' OR id = '"+filtro+"'";
+        String query = "SELECT * FROM producto WHERE (nombre LIKE '%"+filtro+"%' "
+                + "OR marca LIKE '%"+filtro+"%' OR id = '"+filtro+"') AND eliminado = false";
         
         ResultSet rs = con.ejecutar(query);
         
@@ -196,7 +196,7 @@ public class Data {
     public Producto getProductoByID(String id) throws SQLException{
         Producto pro = null;
         
-        ResultSet rs = con.ejecutar("SELECT * FROM producto WHERE id = "+id);
+        ResultSet rs = con.ejecutar("SELECT * FROM producto WHERE id = "+id+" AND eliminado = false");
         
         if(rs.next()){
             pro = new Producto();

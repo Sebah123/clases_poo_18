@@ -6,6 +6,15 @@ public class Producto {
     private String marca;
     private int stock;
     private int precio;
+    private boolean eliminado;
+
+    public boolean isEliminado() {
+        return eliminado;
+    }
+
+    public void setEliminado(boolean eliminado) {
+        this.eliminado = eliminado;
+    }
 
     public int getId() {
         return id;

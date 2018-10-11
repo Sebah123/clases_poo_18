@@ -33,7 +33,7 @@ public class TMProducto extends AbstractTableModel{
             case 1:
                 return pro.getNombre();
             default:
-                return pro.getPrecio();
+                return "$ "+pro.getPrecio();
         }
     }
 

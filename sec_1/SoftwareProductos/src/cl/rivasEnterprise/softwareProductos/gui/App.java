@@ -356,7 +356,7 @@ public class App extends javax.swing.JFrame {
                 btnEliminar.setEnabled(false);
                 btnModificar.setEnabled(false);
                 
-                formProductos.setBounds(0, 0, 650, 330);
+                formProductos.setBounds(0, 0, 650, 530);
                 formProductos.setLocationRelativeTo(null);
                 formProductos.setVisible(true);
                 
